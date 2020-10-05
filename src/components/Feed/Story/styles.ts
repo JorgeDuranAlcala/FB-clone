@@ -9,6 +9,6 @@ export default (theme: Theme) => createStyles({
         height: '40px',
         objectFit: 'contain',
         borderRadius: '50%',
-        border: '4px solid var(--facebook-blue)'
+        border: `4px solid ${theme.palette.primary.main}`
     }
 })

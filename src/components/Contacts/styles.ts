@@ -6,7 +6,10 @@ export default (theme: Theme) => createStyles({
     },
     contacts: {
         gridArea: 'contacts',
-        padding: '8px'
+        padding: '8px',
+        [theme.breakpoints.down('md')]: {
+            display: 'none'
+        }
     },
     contacts__header: {
         display: 'flex',

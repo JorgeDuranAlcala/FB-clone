@@ -1,6 +1,14 @@
 .app__body {
   display: grid;
+  padding-top: 65px;
+  height: auto;
   grid-template-columns: 20% auto 20%;
   grid-template-areas: "sidebar content contacts";
   background-color: var(--bg-light);
+}
+
+@media screen and (max-width: 899px) {
+  .app__body {
+    grid-template-columns: auto;
+  }
 }

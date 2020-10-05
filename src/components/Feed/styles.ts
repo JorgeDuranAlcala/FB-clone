@@ -3,19 +3,22 @@ import { createStyles, Theme } from "@material-ui/core";
 export default (theme: Theme) => createStyles({
     root: {
         gridArea: 'content',
-        display: 'grid',
-        justifyContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         paddingTop: '20px' ,
     },
     stories: {
-        display: 'grid',
+        display: 'flex',
         color: '#fff',
         fontSize: '1.2rem',
         width: 'max-content',
-        height: 'auto',
         gridGap: '8px',
+        height: 'auto',
+        maxHeight: '200px', 
         gridTemplateRows: '1fr',
-        gridTemplateColumns:'repeat(5, 1fr)'
+        gridTemplateColumns:'repeat(5, 1fr)',
+        
     },
     story: {
         width: '110px',
@@ -29,4 +32,7 @@ export default (theme: Theme) => createStyles({
         backgroundSize: 'cover',
         cursor: 'pointer',
     },
+    feed_container: {
+        
+    }
 })

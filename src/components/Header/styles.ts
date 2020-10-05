@@ -6,15 +6,21 @@ export default (theme: Theme) => createStyles({
         gridTemplateColumns: '20% auto auto',
         justifyContent: 'space-between',
         padding: '8px',
-        boxShadow: ' 0px 5px 25px rgba(0,0,0,0.2)',
+        boxShadow: ' 0px 0px 12px rgba(0,0,0,0.2)',
         gridGap: '8px',
+        position: 'fixed',
+        width: '100%',
+        left: 0,
+        top: 0,
+        zIndex: 99,
+        background: '#fff'
     },
     header__left: {
         display: "flex",
         alignItems: "center",
     },
     header__left__input: {
-        width: '80%',
+        flex: 1,
         display: 'flex',
         borderRadius: '20px',
         alignItems: 'center',
@@ -23,7 +29,7 @@ export default (theme: Theme) => createStyles({
         paddingLeft: '8px',
     },
     Input: {
-        flex: '1',
+        width: '50%',
         background: 'inherit',
         borderRadius: '20px',
         border: 'none',
@@ -43,7 +49,7 @@ export default (theme: Theme) => createStyles({
     ,
     header__center: {
         display: "flex",
-        alignItems: "center;"
+        alignItems: "center;",
     }
     ,
     icon: {
@@ -54,11 +60,11 @@ export default (theme: Theme) => createStyles({
     }
     ,
     icon__active: {
-        borderBottom: "3px solid var(--facebook-blue)"
+        borderBottom: `3px solid ${theme.palette.primary.main}`
     }
     ,
     svg: {
-        fill: "var(--facebook-blue)"
+        fill: theme.palette.primary.main
     }, 
     header__right: {
         display: "flex",
@@ -86,11 +92,11 @@ export default (theme: Theme) => createStyles({
     icon_right:  {
         fontSize: "18px",
         padding: "10px 13px",
-        borderRadius: "50",
+        borderRadius: "50%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "var(--facebook-light-gray)",
+        background: theme.palette.secondary.main,
         margin: "0 5px",
-    }
+    },
 })
