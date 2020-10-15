@@ -4,6 +4,7 @@ import styles from "./styles";
 import Story from './Story';
 import PostInput from './PostInput';
 import Post from './Post';
+import useGetPosts from '../../hooks/useGetPosts';
 
 interface Props extends WithStyles<typeof styles> {
     
@@ -12,6 +13,9 @@ interface Props extends WithStyles<typeof styles> {
 export default withStyles(styles)(
     
     function Feed({ classes }: Props): ReactElement {
+
+        const postsList = useGetPosts()
+
         return (
             <div className={classes.root}>
                 <div className={classes.stories}>
@@ -23,8 +27,9 @@ export default withStyles(styles)(
                 </div>
                 <div className={classes.feed_container}>
                     <PostInput/>
-                    <Post title="titulo de prueba" img="https://picsum.photos/800/300" />
-                    <Post title="titulo de prueba" img="https://picsum.photos/800/500" />
+                    {
+                        postsList.map(post => <Post key={post._id} {...post}  />)
+                    }
                 </div>
             </div>
         )

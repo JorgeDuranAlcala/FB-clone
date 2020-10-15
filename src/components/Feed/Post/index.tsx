@@ -1,13 +1,13 @@
 import React, { ReactElement } from "react";
 import { Paper } from "@material-ui/core";
 import useStyles from "./styles";
-import { Props } from "./types";
+import { IProps } from "./types";
 import Avatar from "../../Avatar";
 import Option from "../../Option";
 import { CommentOutlined, ThumbUpAltOutlined, ReplyOutlined } from "@material-ui/icons";
 import Reactions from "../../Reactions";
 
-function Post({ title, img }: Props): ReactElement {
+function Post({ title, img_path, desc, num_comments, likes }: IProps): ReactElement {
   const classes = useStyles();
 
   return (
@@ -16,22 +16,20 @@ function Post({ title, img }: Props): ReactElement {
         <Avatar />
       </div>
       <p className={classes.desc}>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus
-          expedita ut corporis vitae quidem modi ullam delectus cum placeat
-          voluptatum, veritatis quo vero possimus sed minus, eius ea unde quasi?
+         {desc}
       </p>
         {
-            img && (
+            img_path && (
                 <>
-                  <img src={img} className={classes.img_post} alt="post" />  
+                  <img src={`http://localhost:3500/${img_path}`} className={classes.img_post} alt="post" />  
                 </>
             )
         }
        <div>
        </div>
       <div className={classes.post_reacts_n_comments}>
-        <Reactions numReactions={3} />
-        <span>Comments 10</span>
+        <Reactions numReactions={likes} />
+        <span>Comments {num_comments}</span>
       </div>
       <hr className={classes.hr} />
       <div className={classes.footer}>
