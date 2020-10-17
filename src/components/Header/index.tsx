@@ -53,7 +53,7 @@ function Header({ classes }: IHeaderProps): ReactElement {
                 </div>
                 <div className={classes.header__right}>
                     <div className={classes.user}>
-                        <img className={classes.Profile__Photo} src='https://avataaars.io/?avatarStyle=Circle&topType=WinterHat2&accessoriesType=Prescription01&hatColor=Blue01&facialHairType=BeardMedium&facialHairColor=Blonde&clotheType=ShirtCrewNeck&clotheColor=Blue01&eyeType=Squint&eyebrowType=DefaultNatural&mouthType=ScreamOpen&skinColor=Yellow' />
+                        <img className={classes.Profile__Photo} alt="logo-avatar" src='https://avataaars.io/?avatarStyle=Circle&topType=WinterHat2&accessoriesType=Prescription01&hatColor=Blue01&facialHairType=BeardMedium&facialHairColor=Blonde&clotheType=ShirtCrewNeck&clotheColor=Blue01&eyeType=Squint&eyebrowType=DefaultNatural&mouthType=ScreamOpen&skinColor=Yellow' />
                         <h4 className={classes.Profile__userName}>Name</h4>
                     </div>
                     <div className={classes.icons}>

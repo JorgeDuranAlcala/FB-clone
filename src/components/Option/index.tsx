@@ -3,19 +3,27 @@ import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 import React, { ReactElement } from "react";
 import useStyles from './styles'
 
-interface Props {
+interface Props extends React.HTMLProps<HTMLDivElement> {
     Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
-    text: string;
+    text?: string;
+    icon_className?: string;
+    color_icon?: string;
 }
 
-function Option({ Icon, text }: Props): ReactElement {
+function Option({ 
+  Icon, 
+  text, 
+  icon_className,
+  color_icon, 
+  ...rest 
+}: Props): ReactElement {
 
     const classes = useStyles()
 
   return (
-      <div className={classes.Options}>
-        <Icon className={classes.Options__Icon} />
-        <h5 className={classes.Options__text}>{text}</h5>
+      <div {...rest} >
+        <Icon className={icon_className} style={{color: color_icon}} />
+        { text && <h5 className={classes.Options__text}>{text}</h5>}
       </div>
   );
 }

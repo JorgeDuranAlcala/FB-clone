@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { Paper } from "@material-ui/core";
 import useStyles from "./styles";
 import { IProps } from "./types";
-import Avatar from "../../Avatar";
+import MuiAvatar from "../../Avatar";
 import Option from "../../Option";
 import { CommentOutlined, ThumbUpAltOutlined, ReplyOutlined } from "@material-ui/icons";
 import Reactions from "../../Reactions";
@@ -13,7 +13,7 @@ function Post({ title, img_path, desc, num_comments, likes }: IProps): ReactElem
   return (
     <Paper className={classes.root}>
       <div className={classes.header}>
-        <Avatar />
+        <MuiAvatar />
       </div>
       <p className={classes.desc}>
          {desc}
@@ -33,9 +33,9 @@ function Post({ title, img_path, desc, num_comments, likes }: IProps): ReactElem
       </div>
       <hr className={classes.hr} />
       <div className={classes.footer}>
-        <Option Icon={ThumbUpAltOutlined} text="Like" />
-        <Option Icon={CommentOutlined} text="Comment" />
-        <Option Icon={ReplyOutlined} text="Share" />
+        <Option className={classes.Options} Icon={ThumbUpAltOutlined} text="Like" />
+        <Option className={classes.Options} Icon={CommentOutlined} text="Comment" />
+        <Option className={classes.Options} Icon={ReplyOutlined} text="Share" />
       </div>
     </Paper>
   );

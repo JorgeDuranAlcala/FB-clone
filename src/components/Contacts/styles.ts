@@ -12,13 +12,11 @@ export default (theme: Theme) => createStyles({
         }
     },
     contacts__header: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
         color: 'var(--secondary-text)'
     },
     Icon: {
-        marginTop: '8px'
+        marginTop: '0.5rem',
+        marginLeft: '0.5rem'
     },
     friends__list: {
         marginTop: '10px',

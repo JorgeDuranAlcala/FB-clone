@@ -1,6 +1,6 @@
 .app__body {
   display: grid;
-  padding-top: 65px;
+  padding-top: 5rem;
   height: auto;
   grid-template-columns: 20% auto 20%;
   grid-template-areas: "sidebar content contacts";

@@ -1,7 +1,7 @@
-import { createStyles, Theme } from "@material-ui/core";
+import { createStyles, darken, makeStyles, Theme } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 
-export default (theme: Theme) => createStyles({
+export default makeStyles( (theme: Theme) => createStyles({
     root: {
         marginTop: 25,
         padding: '10px',
@@ -53,5 +53,65 @@ export default (theme: Theme) => createStyles({
         marginTop: '10px',
         padding: ' 0 10px',
         borderBottom: `1px solid ${grey['300']}`
+    },
+    container: {
+        display: "grid",
+        placeItems: "center",
+        width: "100%",
+        height: "100%",
+        zIndex: 2
+    },
+    paper: {
+        minWidth: '30rem',
+        padding: '0.5rem 1rem',
+    },
+    body_whoCanWatchIt_section: {
+        padding: '1rem 0'
+    },
+    textField: {
+        width: '100%',
+        color: grey['400'],
+        fontSize: '1.5rem',
+        border: 'none',
+        outline: 'none',
+        '&::placeholder': {
+            fontSize: '1.5rem',
+            color: grey['400'],
+        }
+    },
+    body_header: {
+        display: 'grid',
+        gridTemplateColumns: '92% auto',
+    },
+    body_header_title: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    cancel_icon: {
+        fontSize: "13px",
+        padding: '0.4rem 0.1rem',
+        cursor: 'pointer',
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: theme.palette.secondary.main,
+        '&:hover': {
+            background: darken(theme.palette.secondary.main, 0.1),
+        }
+    },
+    modal_body_options: {
+    },
+    modal_body_options_icon : {
+        fontSize: '2rem',
+        marginLeft: '0.5rem',
+        cursor: 'pointer'
+    },
+    AddPost_container: {
+        padding: '0.8rem',
+        margin: '1rem 0',
+        borderRadius: '10px',
+        border: `1px solid ${grey['400']}`
     }
-})
+}) )

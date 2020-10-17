@@ -43,5 +43,15 @@ export default makeStyles((theme: Theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0.7rem'
-    }
+    },
+    Options: {
+        display: 'flex',
+        alignItems: 'center',
+        margin: '10px 0',
+        padding: '5px 20px',
+        borderRadius: '5px',
+        '&:hover': {
+            backgroundColor: grey[200]
+        }
+    },
 }))
