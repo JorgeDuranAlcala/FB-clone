@@ -5,6 +5,7 @@ import { IFlexProps } from './types'
 function Flex({ 
     align = 'initial',
     justify = 'initial', 
+    direction = 'initial',
     children,
     ...rest 
 }: IFlexProps): ReactElement {
@@ -13,7 +14,8 @@ function Flex({
             style={{ 
                 display: 'flex',
                 justifyContent: justify,
-                alignItems: align
+                alignItems: align,
+                flexDirection: direction
             }} 
             {...rest}>
             {children}

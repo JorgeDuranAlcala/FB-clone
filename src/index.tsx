@@ -12,7 +12,7 @@ const theme = createMuiTheme({
         main: '#1877F2'
       },
       secondary: {
-        main: grey['300']
+        main: grey['200']
       },
     },
     breakpoints: {
