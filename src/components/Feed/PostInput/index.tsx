@@ -9,10 +9,6 @@ import {
   Paper,
   Modal,
   Button,
-  TextareaAutosize,
-  darken,
-  TextField,
-  CardMedia,
   InputBase,
 } from "@material-ui/core";
 import { blue, green, grey, red, yellow } from "@material-ui/core/colors";
@@ -27,7 +23,8 @@ import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined"
 import Option from "../../Option";
 import Flex from "../../Flex";
 import Avatar from "../../Avatar";
-import { Scrollbars } from "react-custom-scrollbars";
+import { create_post } from "../../../api/post";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 
 interface Props extends React.HTMLProps<HTMLDivElement> {}
 
@@ -36,6 +33,8 @@ function PostInput({ ...rest }: Props): ReactElement {
   const [Open, setOpen] = useState(false);
   const [currentFiles, setcurrentFiles] = useState<FileList | null>(null);
   const [PreviewImg, setPreviewImg] = useState<string>('');
+  const [input, setInput] = useState<string>('');
+
   const icons_list = [
     {
       color_icon: red["500"],
@@ -60,13 +59,27 @@ function PostInput({ ...rest }: Props): ReactElement {
     setcurrentFiles(files);
   };
 
-  const onSubmit = useCallback(() => {
-    alert("We are the lovesick girls!!");
-  }, []);
+  const onSubmit = useCallback( async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    
+    if(currentFiles) {
+
+      const post =  await create_post(input, currentFiles[0])
+      console.log(post)
+
+    } else {
+
+      const post =  await create_post(input)
+      console.log(post)
+
+    }
+
+
+  }, [input, currentFiles]);
 
   const body = (
     <div className={classes.container}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} component="form" onSubmit={ (e:any) => onSubmit(e)} >
         <div className={classes.body_header}>
           <h3 className={classes.body_header_title}>Create Post</h3>
           <Option
@@ -79,31 +92,38 @@ function PostInput({ ...rest }: Props): ReactElement {
         <Flex align="center" className={classes.body_whoCanWatchIt_section}>
           <Avatar name="Jorge Duran" />
         </Flex>
-
-        <Flex className={classes.body_center_section} direction="column">
-          <InputBase
-            placeholder="What's on your mind"
-            multiline
-            fullWidth
-            inputProps={{
-              className: classes.textField,
-            }}
-          />
-          { PreviewImg && <Flex style={{position: 'relative'}}>
-              <Option
-                Icon={CloseIcon}
-                onClick={() => setPreviewImg('')}
-                className={classes.cancel_icon}
-                style={{position: 'absolute', top: 10, right: 10, zIndex: 3}}
-              />
-              <img
-                src={PreviewImg}
-                className={classes.preview_img}
-                alt="preview"
-              />
-            </Flex>
-          }
-        </Flex>
+    
+        <OverlayScrollbarsComponent>
+          <Flex className={classes.body_center_section} direction="column">
+            <InputBase
+              placeholder="What's on your mind"
+              multiline
+              fullWidth
+              value={input}
+              onChange={(e: any) => setInput(e.target.value)}
+              inputProps={{
+                className: classes.textField,
+              }}
+            />
+            { PreviewImg && <Flex style={{position: 'relative'}}>
+                <Option
+                  Icon={CloseIcon}
+                  onClick={() => {
+                    setPreviewImg('')
+                    setcurrentFiles(null)
+                  }}
+                  className={classes.cancel_icon}
+                  style={{position: 'absolute', top: 10, right: 10, zIndex: 3}}
+                />
+                <img
+                  src={PreviewImg}
+                  className={classes.preview_img}
+                  alt="preview"
+                />
+              </Flex>
+            }
+          </Flex>
+        </OverlayScrollbarsComponent>
 
         <Flex
           align="center"
@@ -138,9 +158,9 @@ function PostInput({ ...rest }: Props): ReactElement {
 
         <Button
           fullWidth
-          onClick={onSubmit}
           variant="contained"
           color="primary"
+          type="submit"
         >
           Post
         </Button>
