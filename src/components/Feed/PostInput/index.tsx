@@ -64,13 +64,25 @@ function PostInput({ ...rest }: Props): ReactElement {
     
     if(currentFiles) {
 
-      const post =  await create_post(input, currentFiles[0])
-      console.log(post)
+        try {
+          
+          const post =  await create_post(input, currentFiles[0])
+          console.log(post)
+          
+        } catch (error) {
+          console.log(error.message)
+        }
 
     } else {
 
-      const post =  await create_post(input)
-      console.log(post)
+        try {
+          
+          const post =  await create_post(input)
+          console.log(post)
+          
+        } catch (error) {
+          console.log(error.message)
+        }
 
     }
 

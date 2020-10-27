@@ -10,7 +10,7 @@ export default (theme: Theme) => createStyles({
         marginRight: '8px',
     },
     contactName: {
-        fontWeight: 'normal',
+        fontWeight: 500,
         fontSize: '15px',
     }
 })

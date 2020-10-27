@@ -6,6 +6,9 @@ import {
 } from "@material-ui/icons";
 import facebookSvgIcon from '../../assets/svgs/facebook.svg'
 import styles from './styles'
+import { useState as ctxState } from '../../context';
+import Avatar from '../Avatar';
+import { State } from '../../context/reducer';
 
 export interface IHeaderProps extends WithStyles<typeof styles> {
     className?: string;
@@ -14,6 +17,8 @@ export interface IHeaderProps extends WithStyles<typeof styles> {
 function Header({ classes }: IHeaderProps): ReactElement {
     const theme = useTheme()
     const match = useMediaQuery(theme.breakpoints.down('sm'))
+    const [{user}]: [State, any] = ctxState()
+    console.log(user)
 
     const centerIcons = (
         <>
@@ -53,8 +58,9 @@ function Header({ classes }: IHeaderProps): ReactElement {
                 </div>
                 <div className={classes.header__right}>
                     <div className={classes.user}>
-                        <img className={classes.Profile__Photo} alt="logo-avatar" src='https://avataaars.io/?avatarStyle=Circle&topType=WinterHat2&accessoriesType=Prescription01&hatColor=Blue01&facialHairType=BeardMedium&facialHairColor=Blonde&clotheType=ShirtCrewNeck&clotheColor=Blue01&eyeType=Squint&eyebrowType=DefaultNatural&mouthType=ScreamOpen&skinColor=Yellow' />
-                        <h4 className={classes.Profile__userName}>Name</h4>
+                        {/* <img className={classes.Profile__Photo} alt="logo-avatar" src='https://avataaars.io/?avatarStyle=Circle&topType=WinterHat2&accessoriesType=Prescription01&hatColor=Blue01&facialHairType=BeardMedium&facialHairColor=Blonde&clotheType=ShirtCrewNeck&clotheColor=Blue01&eyeType=Squint&eyebrowType=DefaultNatural&mouthType=ScreamOpen&skinColor=Yellow' />
+                        <h4 className={classes.Profile__userName}>Name</h4> */}
+                        <Avatar src={user?.picture?.data?.url} name={user?.name}  />
                     </div>
                     <div className={classes.icons}>
                         <div className={classes.icon_right}>

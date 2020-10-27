@@ -6,6 +6,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core'
 import { grey } from '@material-ui/core/colors';
+import { StateProvider } from './context';
+import ctxReducer, { initialState } from './context/reducer';
 
 const theme = createMuiTheme({
     palette: {
@@ -29,9 +31,11 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <StateProvider initialState={initialState} reducer={ctxReducer} >
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </StateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
