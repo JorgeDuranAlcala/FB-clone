@@ -17,7 +17,11 @@ const theme = createMuiTheme({
       secondary: {
         main: grey['200']
       },
+      text: {
+        primary: "#050505"
+      }
     },
+    spacing: (factor: number) => `${factor * 2}vmin`,
     breakpoints: {
       values: {
         xs: 0,

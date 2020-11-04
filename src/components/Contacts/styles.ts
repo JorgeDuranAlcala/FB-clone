@@ -5,8 +5,11 @@ export default (theme: Theme) => createStyles({
 
     },
     contacts: {
+        position: 'fixed',
+        right: 0,
+        width: '20%',
         gridArea: 'contacts',
-        padding: '8px',
+        padding: '12px',
         [theme.breakpoints.down('md')]: {
             display: 'none'
         }

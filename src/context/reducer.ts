@@ -1,11 +1,11 @@
 import { IUser } from "../models/user"
 
 export type State = {
-    user?: IUser
+    user?: IUser | null
 }
 
-export const initialState: State | any = {
-    user: {}
+export const initialState: State = {
+    user: null
 }
 
 

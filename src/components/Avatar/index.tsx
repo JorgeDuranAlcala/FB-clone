@@ -1,5 +1,5 @@
 import React from 'react'
-/* import useStyles from './styles' */
+import useStyles from './styles'
 import { Avatar as MuiAvatar } from "@material-ui/core";
 import Flex from '../Flex';
 
@@ -20,6 +20,7 @@ const Avatar = ({
     ...rest
 }: Props) => {
 
+    const classes = useStyles()
 
     return (
             <Flex align="center" {...rest} >
@@ -27,7 +28,7 @@ const Avatar = ({
                 src={src}
                 variant={shape}
                 />
-               <h6>{name}</h6>
+               <h6 className={classes.Profile__userName} >{name}</h6>
             </Flex>   
     )
 }

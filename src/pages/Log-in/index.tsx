@@ -15,7 +15,7 @@ const LogIn = () => {
 
     const fbResponse = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
         
-        dispatch && dispatch({
+        dispatch({
             type: ActionTypes.SIGN_IN,
             user: response as IUser
         })

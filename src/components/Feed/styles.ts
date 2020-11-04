@@ -21,7 +21,8 @@ export default (theme: Theme) => createStyles({
         
     },
     story: {
-        width: '110px',
+        minWidth: 80,
+        maxWidth: '110px',
         height:' 200px',
         display: 'flex',
         flexDirection: 'column',

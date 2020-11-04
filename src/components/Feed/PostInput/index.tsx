@@ -67,6 +67,7 @@ function PostInput({ ...rest }: Props): ReactElement {
         try {
           
           const post =  await create_post(input, currentFiles[0])
+          setOpen(false)
           console.log(post)
           
         } catch (error) {
@@ -78,6 +79,7 @@ function PostInput({ ...rest }: Props): ReactElement {
         try {
           
           const post =  await create_post(input)
+          setOpen(false)
           console.log(post)
           
         } catch (error) {

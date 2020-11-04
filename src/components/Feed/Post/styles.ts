@@ -4,8 +4,10 @@ import { grey } from "@material-ui/core/colors";
 
 export default makeStyles((theme: Theme) => ({
     root: {
-        display: 'flex',
-        flexDirection: 'column',
+        /* display: 'flex',
+        flexDirection: 'column', */
+        minWidth: '200px',
+        maxWidth: 600,
         padding: '0.8rem',
         marginTop: '1rem',
         marginBottom: '1rem',

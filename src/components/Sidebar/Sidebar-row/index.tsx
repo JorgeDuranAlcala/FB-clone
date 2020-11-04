@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
-import { WithStyles, withStyles, SnackbarContent } from '@material-ui/core'
+import { WithStyles, withStyles } from '@material-ui/core'
 import styles from "./styles";
-import { Title } from '@material-ui/icons';
 
 interface Props extends WithStyles<typeof styles> {
     className?: string;

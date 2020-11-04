@@ -1,4 +1,5 @@
 .app__body {
+  min-width: 320px !important;
   display: grid;
   padding-top: 5rem;
   height: auto;

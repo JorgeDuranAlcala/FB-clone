@@ -6,7 +6,8 @@ export default (theme: Theme) => createStyles({
     },
     title: {
         fontSize:'15px',
-        fontWeight: 'normal'
+        fontWeight: 500,
+        color: theme.palette.text.primary
     },
     Image: {
         width: '28px',

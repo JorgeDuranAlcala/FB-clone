@@ -7,13 +7,13 @@ import Option from "../../Option";
 import { CommentOutlined, ThumbUpAltOutlined, ReplyOutlined } from "@material-ui/icons";
 import Reactions from "../../Reactions";
 
-function Post({ title, img_path, desc, num_comments, likes }: IProps): ReactElement {
+function Post({ userImg , img_path, desc, num_comments, likes }: IProps): ReactElement {
   const classes = useStyles();
 
   return (
     <Paper className={classes.root}>
       <div className={classes.header}>
-        <MuiAvatar />
+        <MuiAvatar src={userImg} />
       </div>
       <p className={classes.desc}>
          {desc}

@@ -6,7 +6,9 @@ export default makeStyles( (theme: Theme) => ({
         alignItems: 'center',
     },    
     Profile__userName: {
-        fontSize: "14px",
-        fontWeight: "normal",
+        fontSize: "15px",
+        fontWeight: 600,
+        color: theme.palette.text.primary,
+        marginLeft: theme.spacing(0.4)
     },
 }))

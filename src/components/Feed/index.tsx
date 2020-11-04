@@ -16,6 +16,7 @@ export default withStyles(styles)(
 
         const postsList = useGetPosts()
 
+
         return (
             <div className={classes.root}>
                 <div className={classes.stories}>
