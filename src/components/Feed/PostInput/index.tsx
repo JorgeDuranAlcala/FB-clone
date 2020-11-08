@@ -11,7 +11,7 @@ import {
   Button,
   InputBase,
 } from "@material-ui/core";
-import { blue, green, grey, red, yellow } from "@material-ui/core/colors";
+import { blue, green, red, yellow } from "@material-ui/core/colors";
 import useStyles from "./styles";
 import {
   VideoCall,
@@ -25,6 +25,8 @@ import Flex from "../../Flex";
 import Avatar from "../../Avatar";
 import { create_post } from "../../../api/post";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import { useState as useCtxState } from '../../../context/'
+import { State } from "../../../context/reducer";
 
 interface Props extends React.HTMLProps<HTMLDivElement> {}
 
@@ -34,6 +36,7 @@ function PostInput({ ...rest }: Props): ReactElement {
   const [currentFiles, setcurrentFiles] = useState<FileList | null>(null);
   const [PreviewImg, setPreviewImg] = useState<string>('');
   const [input, setInput] = useState<string>('');
+  const [{ user }]: [State] = useCtxState()
 
   const icons_list = [
     {
@@ -54,6 +57,13 @@ function PostInput({ ...rest }: Props): ReactElement {
     currentFiles && setPreviewImg( URL.createObjectURL(currentFiles[0]) )
   }, [currentFiles]);
 
+  useEffect(() => {
+    if(Open) {
+      setInput('')
+      setPreviewImg('')
+    }
+  }, [Open]);
+
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     setcurrentFiles(files);
@@ -66,7 +76,7 @@ function PostInput({ ...rest }: Props): ReactElement {
 
         try {
           
-          const post =  await create_post(input, currentFiles[0])
+          const post =  await create_post(input, user?.picture.data.url ,currentFiles[0])
           setOpen(false)
           console.log(post)
           
@@ -78,7 +88,7 @@ function PostInput({ ...rest }: Props): ReactElement {
 
         try {
           
-          const post =  await create_post(input)
+          const post =  await create_post(input, user?.picture.data.url)
           setOpen(false)
           console.log(post)
           
@@ -89,7 +99,7 @@ function PostInput({ ...rest }: Props): ReactElement {
     }
 
 
-  }, [input, currentFiles]);
+  }, [input, currentFiles, user]);
 
   const body = (
     <div className={classes.container}>

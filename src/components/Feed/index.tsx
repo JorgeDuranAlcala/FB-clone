@@ -29,7 +29,7 @@ export default withStyles(styles)(
                 <div className={classes.feed_container}>
                     <PostInput/>
                     {
-                        postsList.map(post => <Post key={post._id} {...post}  />)
+                        postsList.map(post => <Post key={post._id}  {...post}  />)
                     }
                 </div>
             </div>
