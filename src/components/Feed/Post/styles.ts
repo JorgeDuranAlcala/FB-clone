@@ -49,6 +49,7 @@ export default makeStyles((theme: Theme) => ({
     Options: {
         display: 'flex',
         alignItems: 'center',
+        cursor: 'pointer',
         margin: '10px 0',
         padding: '5px 20px',
         borderRadius: '5px',

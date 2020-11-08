@@ -20,9 +20,46 @@ export default function useGetPosts() {
 
         const channel =  pusher.subscribe('post')
       
-        channel.bind("inserted", (data: any) => { getPostFromAPI()})
+        type pusherData = {
+            change: {
+                updateDescription: {
+                    removedFields: Array<any> | []
+                    updatedFields: any
+                },
+                documentKey: {
+                    _id: string
+                }
+            }
+        }
 
-    }, [])
+        channel.bind("inserted", (data: any) => getPostFromAPI())
+        channel.bind("like", (data: pusherData) => {
+            if(data) {
+                const {
+                    documentKey: {
+                        _id: Id
+                    }, 
+                    updateDescription: { 
+                    updatedFields: {
+                            likes
+                        }
+                    } 
+                } = data.change
+                
+                //console.log(data)
+                let newArr = postsList.map(post => post._id === Id ? {...post, likes} : post)
+                setPostsList(newArr)
+            }
+
+        })
+
+        return () => {
+            channel.unbind()
+            pusher.unsubscribe('post')
+        }
+
+    }, [postsList])
+
     
     useEffect(() => {
         getPostFromAPI()
@@ -31,5 +68,4 @@ export default function useGetPosts() {
 
     return postsList
             .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-
 }
