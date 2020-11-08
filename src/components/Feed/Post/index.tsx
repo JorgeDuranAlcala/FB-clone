@@ -10,7 +10,6 @@ import { update_post } from "../../../api/post";
 
 function Post({ _id ,  userImg, img_path, desc, num_comments, likes }: IProps): ReactElement {
   const classes = useStyles();
-  /* const [num_likes, setNumLikes] = useState<number>(likes) */
   const [triggerLike, setTriggerLike] = useState<boolean>(false)
   const ref = useRef<HTMLSpanElement>(null);
 

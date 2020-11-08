@@ -46,7 +46,6 @@ export default function useGetPosts() {
                     } 
                 } = data.change
                 
-                //console.log(data)
                 let newArr = postsList.map(post => post._id === Id ? {...post, likes} : post)
                 setPostsList(newArr)
             }
