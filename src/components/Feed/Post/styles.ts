@@ -36,7 +36,7 @@ export default makeStyles((theme: Theme) => ({
     },
     hr: {
         border: 'none',
-        marginTop: '10px',
+        marginTop: theme.spacing(0.1),
         padding: ' 0 10px',
         borderBottom: `1px solid ${grey['300']}`
     },
@@ -51,7 +51,7 @@ export default makeStyles((theme: Theme) => ({
         alignItems: 'center',
         cursor: 'pointer',
         margin: '10px 0',
-        padding: '5px 20px',
+        padding: '10px 20px',
         borderRadius: '5px',
         '&:hover': {
             backgroundColor: grey[200]

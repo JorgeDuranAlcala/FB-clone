@@ -1,5 +1,6 @@
+import { IComment } from "../models/comment"
 import { Ipost } from "../models/post"
-import { getPostsResponse, updatePostResponse } from "../models/response"
+import { getPostsResponse, newCommentResponse, updatePostResponse } from "../models/response"
 
 const ENDPOINT = `http://localhost:3500/api/v1`
 
@@ -44,6 +45,23 @@ export const update_post = async (id: string, body: Partial<Ipost>) => {
         })
         
         return await res.json() as updatePostResponse
+        
+    } catch(e) {
+        console.log(e.message)
+    }
+}
+
+export const add_new_comment = async (postId: string, body: Partial<IComment>) => {
+    
+    try {
+   
+        const res = await fetch(`${ENDPOINT}/comments/${postId}`, {
+            body: JSON.stringify(body),
+            method: 'PUT',
+            headers: { "Content-type": 'application/json' }
+        })
+        
+        return await res.json() as newCommentResponse
         
     } catch(e) {
         console.log(e.message)
