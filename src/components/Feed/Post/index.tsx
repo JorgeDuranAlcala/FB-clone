@@ -7,8 +7,19 @@ import Option from "../../Option";
 import { CommentOutlined, ThumbUpAltOutlined, ReplyOutlined } from "@material-ui/icons";
 import Reactions from "../../Reactions";
 import { update_post } from "../../../api/post";
+import InputComment from "./Input-comment";
+import CommentList from "./CommentList";
+import Comment from "./Comment";
 
-function Post({ _id ,  userImg, img_path, desc, num_comments, likes }: IProps): ReactElement {
+function Post({
+   _id ,  
+   userImg, 
+   img_path, 
+   desc, 
+   num_comments, 
+   likes,
+   comments
+  }: IProps): ReactElement {
   const classes = useStyles();
   const [triggerLike, setTriggerLike] = useState<boolean>(false)
   const ref = useRef<HTMLSpanElement>(null);
@@ -43,7 +54,7 @@ function Post({ _id ,  userImg, img_path, desc, num_comments, likes }: IProps): 
        </div>
       <div className={classes.post_reacts_n_comments}>
         <Reactions numReactions={likes} ref={ref} />
-        <span>Comments {num_comments}</span>
+        <span>Comments {comments.length}</span>
       </div>
       <hr className={classes.hr} />
       <div className={classes.footer}>
@@ -51,6 +62,8 @@ function Post({ _id ,  userImg, img_path, desc, num_comments, likes }: IProps): 
         <Option className={classes.Options} Icon={CommentOutlined} text="Comment" />
         <Option className={classes.Options} Icon={ReplyOutlined} text="Share" />
       </div>
+      { comments.map( (comment) => <Comment key={comment._id} {...comment} /> ) }
+      <InputComment postId={_id} />
     </Paper>
   );
 }

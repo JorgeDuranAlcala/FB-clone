@@ -1,3 +1,4 @@
+import { IComment } from "./comment";
 import { Ipost } from "./post";
 
 export type BasicResponse = {
@@ -12,6 +13,11 @@ export type getPostsResponse = {
 export type updatePostResponse = {
     message: string;
     Updated_post: Ipost
+}
+
+export type newCommentResponse = {
+    message: string;
+    Updated_post: IComment
 }
 
 export type Response = BasicResponse & getPostsResponse & updatePostResponse

@@ -10,6 +10,7 @@ import { StateProvider } from './context';
 import ctxReducer, { initialState } from './context/reducer';
 
 const theme = createMuiTheme({
+    
     palette: {
       primary: {
         main: '#1877F2'
@@ -19,6 +20,9 @@ const theme = createMuiTheme({
       },
       text: {
         primary: "#050505"
+      },
+      background: {
+        default: grey['300']
       }
     },
     spacing: (factor: number) => `${factor * 2}vmin`,
@@ -30,7 +34,7 @@ const theme = createMuiTheme({
         lg: 1280,
         xl: 1920
       }
-    }
+    },
 })
 
 ReactDOM.render(
