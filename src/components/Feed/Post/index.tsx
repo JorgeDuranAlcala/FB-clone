@@ -1,15 +1,19 @@
-import React, { ReactElement, useState, useLayoutEffect, memo , useRef } from "react";
-import { Paper } from "@material-ui/core";
+import React, { ReactElement, useState, useLayoutEffect , useRef } from "react";
+import { IconButton, Paper, MenuList, MenuItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import useStyles from "./styles";
 import { IProps } from "./types";
 import MuiAvatar from "../../Avatar";
 import Option from "../../Option";
-import { CommentOutlined, ThumbUpAltOutlined, ReplyOutlined } from "@material-ui/icons";
+import { CommentOutlined, ThumbUpAltOutlined, ReplyOutlined, MoreHoriz as MoreIcon, Delete as DeleteIcon } from "@material-ui/icons";
 import Reactions from "../../Reactions";
 import { update_post } from "../../../api/post";
 import InputComment from "./Input-comment";
 import CommentList from "./CommentList";
-import Comment from "./Comment";
+import Flex from "../../Flex";
+import { usePopupState, bindTrigger  } from 'material-ui-popup-state/hooks'
+import CustomPopover from "../../CustomPopover";
+import * as api from '../../../api/post'
+/* import Comment from "./Comment"; */
 
 function Post({
    _id ,  
@@ -22,7 +26,11 @@ function Post({
   }: IProps): ReactElement {
   const classes = useStyles();
   const [triggerLike, setTriggerLike] = useState<boolean>(false)
-  const ref = useRef<HTMLSpanElement>(null);
+  const ref = useRef<HTMLHeadingElement>(null);
+  const popupState = usePopupState({
+    variant: 'popover',
+    popupId: 'options-popover'
+})
 
   useLayoutEffect(() => {
       if(null !== ref.current && triggerLike) {
@@ -34,12 +42,31 @@ function Post({
       setTriggerLike(true)
       await update_post(_id, { likes: likes + 1 })
   }
+  
+  const delete_post = async () => {
+    const res = await api.delete_post(_id)
+    popupState.close()
+    console.log(res)
+  }
 
   return (
     <Paper className={classes.root}>
-      <div className={classes.header}>
+      <Flex align="center" justify="space-between" className={classes.header}>
         <MuiAvatar src={userImg} />
-      </div>
+        <IconButton {...bindTrigger(popupState)}>
+          <MoreIcon />
+        </IconButton>
+        <CustomPopover popupState={popupState} >
+          <MenuList onClick={delete_post}>
+              <MenuItem>
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText primary="Delete comment" />
+              </MenuItem>
+            </MenuList>
+        </CustomPopover>
+      </Flex>
       <p className={classes.desc}>
          {desc}
       </p>
@@ -54,7 +81,7 @@ function Post({
        </div>
       <div className={classes.post_reacts_n_comments}>
         <Reactions numReactions={likes} ref={ref} />
-        <span>Comments {comments.length}</span>
+        <h4>Comments {comments.length}</h4>
       </div>
       <hr className={classes.hr} />
       <div className={classes.footer}>
@@ -62,7 +89,7 @@ function Post({
         <Option className={classes.Options} Icon={CommentOutlined} text="Comment" />
         <Option className={classes.Options} Icon={ReplyOutlined} text="Share" />
       </div>
-      { comments.map( (comment) => <Comment key={comment._id} {...comment} /> ) }
+      <CommentList comments={comments} />
       <InputComment postId={_id} />
     </Paper>
   );

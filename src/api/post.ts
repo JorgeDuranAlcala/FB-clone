@@ -34,6 +34,21 @@ export const create_post = async (desc: string, userImg?: string, file?: File ) 
     
 }
 
+export const delete_post = async (id: string) => {
+    
+    try {
+   
+        const res = await fetch(`${ENDPOINT}/post/${id}`, {
+            method: 'DELETE',
+        })
+        
+        return await res.json() as updatePostResponse
+        
+    } catch(e) {
+        console.log(e.message)
+    }
+}
+
 export const update_post = async (id: string, body: Partial<Ipost>) => {
     
     try {
