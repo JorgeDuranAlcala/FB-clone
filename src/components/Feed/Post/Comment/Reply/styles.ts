@@ -15,13 +15,13 @@ export default makeStyles((theme: Theme) => createStyles({
         flex: 0.1,
         alignSelf: 'flex-start'
     },
-    commentBody_container: {
+    commentBody_cont: {
         position: 'relative',
         width: '100%',
         backgroundColor: grey['200'],
         padding: `${theme.spacing(0.5)} ${theme.spacing(1)}`,
         borderRadius: 10,
-        '&:hover > .makeStyles-MuiIconButton-84': {
+        '&:hover > .makeStyles-MuiReplyIconButton-100': {
             display: 'inline-block'
          }
     },
@@ -50,7 +50,7 @@ export default makeStyles((theme: Theme) => createStyles({
     displayNone: {
         display: 'none',
     },
-    MuiIconButton: {
+    MuiReplyIconButton: {
         /* display: 'none', */
         position: 'absolute',
         top: '20%',

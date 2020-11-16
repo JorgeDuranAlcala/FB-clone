@@ -5,9 +5,11 @@ import { createBrowserHistory } from "history";
 import Home from './pages/Home';
 import LoginPage from "./pages/Log-in";
 import PrivateRoute from './routes/PrivateRoute';
+import { useState as getCtxState } from "./context/index";
 
 function App() {
-
+  const [{ posts }] = getCtxState()
+  console.log("POST FROM CONTEXT_API >>>", posts)
   const history = createBrowserHistory()
 
   return (

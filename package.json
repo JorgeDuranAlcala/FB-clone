@@ -24,6 +24,7 @@
     "react": "^16.13.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.13.1",
+    "react-facebook-auth": "^1.4.0",
     "react-facebook-login": "^4.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
@@ -31,7 +32,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

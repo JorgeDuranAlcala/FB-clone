@@ -5,4 +5,8 @@ export default makeStyles((theme: Theme) => ({
         display: 'flex',
         alignItems: 'center'
     },
+    text: {
+        fontSize: '13px',
+        marginLeft: theme.spacing(0.2)
+    }
 }))

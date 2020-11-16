@@ -4,16 +4,18 @@ import Comment from '../Comment'
 import { IComment } from '../../../../models/comment'
 
 interface Props {
-    comments: IComment[]
+    postId: string;
+    comments: IComment[];
 }
 
-export default function CommentList({  comments  }: Props): ReactElement {
+export default function CommentList({  comments, postId  }: Props): ReactElement {
     
 
     
     return (
         <>
-           { comments.map( (comment) => <Comment key={comment._id} {...comment} /> ) }
+           { comments.map( (comment) => <Comment key={comment._id} postId={postId} comment={{...comment}} /> ) }
+           
         </>
     )
 }

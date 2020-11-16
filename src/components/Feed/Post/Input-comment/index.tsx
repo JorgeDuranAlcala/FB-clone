@@ -1,48 +1,38 @@
 import { PhotoOutlined, EmojiEmotionsOutlined, GifOutlined } from '@material-ui/icons'
-import React, { ReactElement, Fragment, ChangeEvent, useState, FormEvent } from 'react'
+import React, { ReactElement, Fragment } from 'react'
 import * as ctx from '../../../../context'
 import { State } from '../../../../context/reducer'
 import Avatar from '../../../Avatar'
 import Flex from '../../../Flex'
-import * as api from "../../../../api/post";
+/* import * as api from "../../../../api/comments"; */
 
 import useStyles from './styles'
+/* import { action_add_comment } from '../../../../Action/post.action' */
 
 interface Props {
-    postId: string
+    postId: string;
+    input: string;
+    onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function InputComment({
-    postId
+    postId,
+    onSubmit,
+    onChange,
+    input
 }: Props): ReactElement {
 
-   const [{user}]: [State] = ctx.useState()
+   const [{user}]: [State, any] = ctx.useState()
    const classes = useStyles()
-   const [input, setInput] = useState<string>('')
 
-  const onChange =  (e: ChangeEvent<HTMLInputElement>) => {
-        setInput(e.target.value)
-    }  
-
-  const onSubmit =  async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        await api.add_new_comment(postId, {
-            commentBody: input,
-            user: {
-                userImg: user?.picture.data.url,
-                username: user?.name
-            }
-        })
-
-    }  
-   
 
     return (
         <Fragment>
             <Flex className={classes.root}>
                 <Avatar className={classes.avatar} src={user?.picture.data.url} />
                 <Flex align="center"  className={classes.input_container}>
-                    <form onSubmit={onSubmit} className={classes.form} >
+                    <form onSubmit={onSubmit && onSubmit} className={classes.form} >
                         <input placeholder="Write a comment" value={input} onChange={onChange} className={classes.inputFile} type="text"/>
                         <button hidden type="submit"></button>
                     </form>
