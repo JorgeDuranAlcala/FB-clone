@@ -1,90 +1,110 @@
-import React, { ReactElement, useState } from 'react'
-import IReplyProps from "./types";
+import React, { ReactElement } from 'react'
+import Avatar from '../../../../Avatar'
 import Flex from '../../../../Flex'
-import Avatar from "../../../../Avatar";
-import { MoreHoriz as MoreIcon, Delete as DeleteIcon  } from '@material-ui/icons';
-import { formatDistanceToNow } from "date-fns";
-import { IconButton, MenuList, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import IReply from './types'
+import Reactions from '../../../../Reactions'
+import { formatDistanceToNow, format } from "date-fns";
+import { IconButton } from "@material-ui/core";
+import { MoreHoriz as MoreIcon, Delete as DeleteIcon } from "@material-ui/icons";
 import { usePopupState, bindTrigger  } from 'material-ui-popup-state/hooks'
-import CustomPopover from '../../../../CustomPopover';
-import * as api from "../../../../../api/reply";
-import { useState as useCtxState } from "../../../../../context/index";
-
+import CustomPopover from '../../../../CustomPopover'
+import CustomTooltip from "../../../../CustomTooltip";
+import { useState as useCtxState } from "../../../../../context";
+import { State } from '../../../../../context/reducer'
 import useStyles from './styles'
-import { State } from '../../../../../context/reducer';
-import { action_delete_reply } from '../../../../../Action/reply.action';
+import { action_delete_reply, action_like_reply } from '../../../../../Action/reply.action'
+import * as api from '../../../../../api/reply'
 
-interface Props {
-    
-}
 
-export default function Reply({  
-    popupState, 
+export default function Reply({
     reply,
-    postId,
-    commentId
-}: IReplyProps): ReactElement {
-    
-    const {
-        _id,
-        user,  
+    commentId,
+    postId
+}: IReply): ReactElement {
+
+   const {
+       _id: replyId,
+        user,
         commentBody,
         likes,
         created_at,
-    } = reply
-    const [displayMoreIcon, setDisplayMoreIcon] = useState<boolean>(false)
-    const classes = useStyles()
+   } = reply
+
+   const classes = useStyles()
+   const popupState = usePopupState({
+        variant: 'popover',
+        popupId: 'options-popover-reply'
+    })
     const [{ posts }, dispatch]: [State, any] = useCtxState()
 
-    const deleteReply = async () => {
-        popupState.close()
-        postId && commentId && dispatch(action_delete_reply(postId, commentId, reply, posts ))
-        const res = postId && commentId && await api.delete_reply(postId, commentId, reply)
-        console.log(res)
+    async function deleteReply() {
+        if(postId && commentId && replyId) {
+            popupState.close()
+            dispatch(action_delete_reply(postId, commentId, replyId , posts))
+            const res = await api.delete_reply(postId, commentId, reply)
+            console.log(res)
+        }
     }
 
+    async function LikeReply() {
+        if(postId && commentId && replyId) {
+            dispatch(action_like_reply(postId, commentId, replyId, posts))
+            const res = await api.like_reply(postId, commentId, replyId)
+            console.log("RESPONSE >>", res)
+        }
+    }
+
+
     return (
-        <Flex
-            onMouseOver={() => setDisplayMoreIcon(true)}
-            onMouseLeave={() => setDisplayMoreIcon(false)}
-            className={classes.root}
-        >
-             <Avatar src={user?.userImg} className={classes.Avatar} />
-            <Flex direction="column" className={classes.commentBody}>
-            <Flex direction="column" className={classes.commentBody_cont}>
-                <h3 className={classes.userName}>{user?.username}</h3>
-                <p className={classes.text}>{commentBody}</p>
-                <IconButton
-                    {...bindTrigger(popupState)}
-                    aria-label="options"
-                    size="small"
-                    className={` ${
-                        classes.MuiReplyIconButton
-                    }`}
-                >
-                    <MoreIcon className={classes.moreIcon} />
-                </IconButton>
+        <Flex align="center" className={classes.root} > 
+
+            <Avatar  src={user.userImg} className={classes.avatar} />
+
+            <Flex direction="column">
+                <Flex direction="column" className={classes.commentBody}>
+
+                  <h3 className={classes.userName}>{user?.username}</h3>
+                  <p className={classes.text}>{commentBody}</p>
+
+                  {/* Reactions */}
+
+                  <div className={classes.reactions}>
+                    <Reactions size="small" numReactions={likes} />
+                  </div>
+
+                   {/* Delete Icon */}
+
+                   <IconButton
+                        {...bindTrigger(popupState)}
+                        aria-label="options"
+                        size="small"
+                        className={classes.MuiIconButton}
+                    >
+                      <MoreIcon />
+                    </IconButton>
+
+                     {/* Popup to delete */}
+
+                    <CustomPopover popupState={popupState}>
+                        <Flex align="center" className={classes.deletePlace} onClick={deleteReply}>
+                            <DeleteIcon className={classes.deleteIcon} />
+                           <span>
+                                Delete reply
+                            </span> 
+                        </Flex>  
+                    </CustomPopover>
+
+                </Flex>
+                <Flex align="center" className={classes.like_reply_container} >
+                    <span className={classes.like_Reply_button} onClick={LikeReply}>Like</span>
+                    <span className={classes.like_Reply_button}>Reply</span>
+                    <CustomTooltip title={`${ created_at && format(new Date(created_at), "PP")}`} >
+                        <span className={`${classes.created_at} ${classes.like_Reply_button}`}>
+                            { created_at && formatDistanceToNow(new Date(created_at)) }
+                        </span>
+                    </CustomTooltip>
+                </Flex>
             </Flex>
-            <Flex className={classes.like_reply_container}>
-                <small className={classes.like_Reply_button}>Like</small>
-                <small className={classes.like_Reply_button}>Reply</small>
-                <small
-                className={`${classes.like_Reply_button} ${classes.created_at}`}
-                >
-                {created_at && formatDistanceToNow(new Date(created_at))}
-                </small>
-            </Flex>
-            </Flex>
-            <CustomPopover popupState={popupState}>
-                <MenuList onClick={deleteReply}>
-                    <MenuItem>
-                    <ListItemIcon>
-                        <DeleteIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Delete comment" />
-                    </MenuItem>
-                </MenuList>
-            </CustomPopover>
         </Flex>
     )
 }

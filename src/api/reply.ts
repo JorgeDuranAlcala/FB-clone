@@ -25,8 +25,8 @@ export const add_new_reply = async (postId: string, commentId: string, body: Par
 export const delete_reply = async (postId: string, commentId: string, reply: Partial<IReply>) => {
     
     try {
-   
-        const res = await fetch(`${repEndpoint(postId, commentId)}/deleteComment`, {
+        console.log(`${repEndpoint(postId, commentId)}/deleteReply`)
+        const res = await fetch(`${repEndpoint(postId, commentId)}/deleteReply`, {
             body: JSON.stringify({ reply }),
             method: 'DELETE',
             headers: { "Content-type": 'application/json' }

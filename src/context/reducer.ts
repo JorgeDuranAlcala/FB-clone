@@ -24,6 +24,7 @@ export enum ActionTypes {
     DELETE_COMMENT = "DELETE_COMMENT",
     LIKE_COMMENT = "LIKE_COMMENT",
     DELETE_REPLY = "DELETE_REPLY",
+    LIKE_REPLY = "LIKE_REPLY",
 }
 
 export type Action = {
@@ -74,5 +75,10 @@ export default function ctxReducer(state: State, action: Action) {
                         ...state,
                         posts: action.posts
                     }
+                    case ActionTypes.LIKE_REPLY:
+                        return {
+                            ...state,
+                            posts: action.posts
+                        }
             }
 }

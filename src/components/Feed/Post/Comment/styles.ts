@@ -21,9 +21,6 @@ export default makeStyles((theme: Theme) => createStyles({
         backgroundColor: grey['200'],
         padding: `${theme.spacing(0.5)} ${theme.spacing(1)}`,
         borderRadius: 10,
-        '&:hover > .makeStyles-MuiIconButton-84': {
-            display: 'inline-block'
-         }
     },
     like_reply_container: {
         position: "relative",

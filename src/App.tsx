@@ -9,7 +9,7 @@ import { useState as getCtxState } from "./context/index";
 
 function App() {
   const [{ posts }] = getCtxState()
-  console.log("POST FROM CONTEXT_API >>>", posts)
+ /*  console.log("POST FROM CONTEXT_API >>>", posts) */
   const history = createBrowserHistory()
 
   return (
