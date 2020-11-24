@@ -18,7 +18,6 @@ function Header({ classes }: IHeaderProps): ReactElement {
     const theme = useTheme()
     const match = useMediaQuery(theme.breakpoints.down('sm'))
     const [{user}]: [State, any] = ctxState()
-    console.log(user)
 
     const centerIcons = (
         <>

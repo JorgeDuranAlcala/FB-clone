@@ -1,18 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { get_all_posts } from '../api/post'
 import { Ipost } from "../models/post";
 import Pusher from 'pusher-js'
 import { IComment } from '../models/comment';
 import { findAndModify } from '../utils/array';
+import { useState as getCtxState } from "../context/index";
+import { ActionTypes, State } from '../context/reducer';
 
 
 export default function useGetPosts() {
     
     const [postsList, setPostsList] = useState<Ipost[]>([])
+    const [{ posts }, dispatch]: [State, any] = getCtxState()
     
-    const getPostFromAPI = async () => {
-        setPostsList(await get_all_posts())
-    }
+    const getPostFromAPI = useCallback( async () => {
+        const posts = await get_all_posts()
+        dispatch({
+            type: ActionTypes.ADD_POSTS,
+            posts
+        })
+        /* setPostsList(posts) */
+    }, [dispatch])
+
+    const getUpdatedPostFromAPI = useCallback( async () => {
+        const posts = await get_all_posts()
+        dispatch({
+            type: ActionTypes.REPLY_COMMENT,
+            posts
+        })
+        /* setPostsList(posts) */
+    }, [dispatch])
     
     useEffect(() => {
         
@@ -35,9 +52,9 @@ export default function useGetPosts() {
         }
 
         channel.bind("inserted", (data: any) => getPostFromAPI())
-        channel.bind("like", (data: pusherData) => {
+        channel.bind('deleted', (data: any) => getPostFromAPI())
+        channel.bind("updated", (data: pusherData) => {
             if(data) {
-                console.log(data)
                 const {
                     documentKey: {
                         _id: Id
@@ -47,7 +64,8 @@ export default function useGetPosts() {
                     } 
                 } = data.change
                 
-                /* let property = Object.keys(updatedFields)[0].replace(/\.[0-9]$/g, '') */
+                /* 
+                console.log(data)
                 let newData = updatedFields[Object.keys(updatedFields)[0]] as IComment
                 console.log(newData)
                 let newArr = updatedFields.likes 
@@ -59,7 +77,16 @@ export default function useGetPosts() {
                                      } 
                                     : post)
                 console.log(newArr)
-                setPostsList(newArr)
+                setPostsList(newArr) */
+               /*  alert("Reply") */
+               /*  const numbers =  Object.keys(updatedFields)[0].match(/[0-9]/g) as string[]
+                const typeReply =  Object.keys(updatedFields)[0].match(/replies/g) as string[]
+               let newData = updatedFields[Object.keys(updatedFields)[0]] as IComment
+                console.log(updatedFields, newData)
+                console.log("Numbers", numbers, "Replies", typeReply)
+                console.log("change", data)
+                let comment = posts?.find(p => p._id === Id)?.comments[`${numbers[0]}`] as any */
+                getPostFromAPI()
             }
 
         })
@@ -69,7 +96,7 @@ export default function useGetPosts() {
             pusher.unsubscribe('post')
         }
 
-    }, [postsList])
+    }, [getPostFromAPI, postsList, getUpdatedPostFromAPI])
 
     
     useEffect(() => {
@@ -77,6 +104,6 @@ export default function useGetPosts() {
     }, [])
 
 
-    return postsList
-            .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    return posts
+            ?.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 }

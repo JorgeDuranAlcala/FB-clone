@@ -31,6 +31,7 @@ import { State } from "../../../context/reducer";
 interface Props extends React.HTMLProps<HTMLDivElement> {}
 
 function PostInput({ ...rest }: Props): ReactElement {
+  
   const classes = useStyles();
   const [Open, setOpen] = useState(false);
   const [currentFiles, setcurrentFiles] = useState<FileList | null>(null);

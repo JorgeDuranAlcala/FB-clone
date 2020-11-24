@@ -15,25 +15,43 @@ const LogIn = () => {
 
     const fbResponse = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
         
+        //console.log(response)
         dispatch({
             type: ActionTypes.SIGN_IN,
             user: response as IUser
         })
 
+        window.localStorage.setItem('user', JSON.stringify(response))
+
         history.push('/')
     }
+
+    React.useEffect(() => {
+        const user = window.localStorage.getItem('user')
+        if(user) {
+            dispatch({
+                type: ActionTypes.SIGN_IN,
+                user: JSON.parse(user) as IUser
+            })
+
+            history.push('/')
+        }
+    }, [dispatch, history])
 
     return (
         <div className={classes.root} >
             <div>
                 <h2>Login with Facebook</h2>
-                    <FacebookButton 
+                   <FacebookButton 
                         appId="1533079716891507"
                         autoLoad={true}
                         fields="name,email,picture"
                         callback={fbResponse}
+                        onFailure={(e: any)=> {
+                            throw new Error(e.messgae)
+                        }}
                         icon="fa-facebook"
-                        />
+                    /> 
             </div>
         </div>
     )

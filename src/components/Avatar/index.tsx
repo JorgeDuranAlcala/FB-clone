@@ -13,7 +13,6 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 
 const Avatar = ({ 
     fontSize = '12px', 
-    children, 
     name,
     shape = 'circle' ,
     src = "https://avataaars.io/?avatarStyle=Circle&topType=WinterHat2&accessoriesType=Prescription01&hatColor=Blue01&facialHairType=BeardMedium&facialHairColor=Blonde&clotheType=ShirtCrewNeck&clotheColor=Blue01&eyeType=Squint&eyebrowType=DefaultNatural&mouthType=ScreamOpen&skinColor=Yellow",
@@ -25,10 +24,10 @@ const Avatar = ({
     return (
             <Flex align="center" {...rest} >
                 <MuiAvatar
-                src={src}
-                variant={shape}
+                    src={src}
+                    variant={shape}
                 />
-               <h6 className={classes.Profile__userName} >{name}</h6>
+               { name && <h6 className={classes.Profile__userName} >{name}</h6>}
             </Flex>   
     )
 }

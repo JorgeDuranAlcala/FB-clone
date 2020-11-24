@@ -8,7 +8,7 @@ export interface IReply {
     _id?: string;
     user: typeCommentUser;
     commentBody: string;
-    likes: number;
+    likes?: number;
     created_at?: Date;
 }
 
@@ -17,7 +17,7 @@ export interface IComment {
     _id?: string;
     user: typeCommentUser;
     commentBody: string;
-    likes: number;
-    replies: IReply[];
+    likes?: number;
+    replies?: IReply[];
     created_at?: Date;
 }
