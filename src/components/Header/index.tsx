@@ -9,6 +9,7 @@ import styles from './styles'
 import { useState as ctxState } from '../../context';
 import Avatar from '../Avatar';
 import { State } from '../../context/reducer';
+import useFacebookLogin from '../../hooks/useFacebookLogin';
 
 export interface IHeaderProps extends WithStyles<typeof styles> {
     className?: string;
@@ -18,6 +19,7 @@ function Header({ classes }: IHeaderProps): ReactElement {
     const theme = useTheme()
     const match = useMediaQuery(theme.breakpoints.down('sm'))
     const [{user}]: [State, any] = ctxState()
+    const { logOut } = useFacebookLogin()
 
     const centerIcons = (
         <>
@@ -59,7 +61,7 @@ function Header({ classes }: IHeaderProps): ReactElement {
                     <div className={classes.user}>
                         {/* <img className={classes.Profile__Photo} alt="logo-avatar" src='https://avataaars.io/?avatarStyle=Circle&topType=WinterHat2&accessoriesType=Prescription01&hatColor=Blue01&facialHairType=BeardMedium&facialHairColor=Blonde&clotheType=ShirtCrewNeck&clotheColor=Blue01&eyeType=Squint&eyebrowType=DefaultNatural&mouthType=ScreamOpen&skinColor=Yellow' />
                         <h4 className={classes.Profile__userName}>Name</h4> */}
-                        <Avatar src={user?.picture?.data?.url} name={user?.name}  />
+                        <Avatar src={user?.userImg} name={user?.username}  />
                     </div>
                     <div className={classes.icons}>
                         <div className={classes.icon_right}>
@@ -71,7 +73,7 @@ function Header({ classes }: IHeaderProps): ReactElement {
                         <div className={classes.icon_right}>
                             <i className="fas fa-bell"></i>
                         </div>
-                        <div className={classes.icon_right}>
+                        <div className={classes.icon_right} onDoubleClick={logOut}>
                             <i className="fas fa-sort-down"></i>
                         </div>
                     </div>

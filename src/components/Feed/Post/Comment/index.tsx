@@ -62,8 +62,8 @@ function Comment({
       const reply = {
         commentBody: Input,
           user: {
-            userImg: currentUser?.picture.data.url,
-            username: currentUser?.name
+            userImg: currentUser?.userImg,
+            username: currentUser?.username
           }
         }
         

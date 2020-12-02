@@ -1,12 +1,15 @@
 import * as React from 'react'
 import * as api from '.././api/auth'
-import { ActionTypes } from '../context/reducer';
-import { History } from 'history'
+import { ActionTypes, State } from '../context/reducer';
+import { useState as getCtxState } from '../context';
+import { useHistory } from 'react-router-dom'
 import { IUser } from '../models/user';
 
-export default function (history: History<History.UnknownFacade>, dispatch: any ) {
+export default function () {
 
-   const [error, setError] = React.useState<{ message?: string }>({})
+    const [{}, dispatch]: [State | {}, any] = getCtxState()
+   const [error, setError] = React.useState<Error | null>(null)
+   const history = useHistory()
 
    React.useEffect(() => {
        (async () => {
@@ -16,12 +19,12 @@ export default function (history: History<History.UnknownFacade>, dispatch: any 
                dispatch({
                     type: ActionTypes.SIGN_IN,
                     user: data.user as IUser
-                })
+                }) 
 
-                history.replace('/')
+               history.push('/')
 
            } catch (error) {
-                setError(error)
+                setError(error.message)
            }
        })()
    }, [dispatch, history])
@@ -30,8 +33,20 @@ export default function (history: History<History.UnknownFacade>, dispatch: any 
        window.open("http://localhost:3500/api/v1/auth/facebook", "_self")
    }
 
+   const logOut = async () => {
+       try {
+           
+           const response = await api.logOut()
+           alert(response.message)
+
+       } catch (error) {
+           setError(error)
+       }
+   }
+
     return {
         loginWithFB,
+        logOut,
         error
     }
 

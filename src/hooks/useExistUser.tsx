@@ -1,10 +1,22 @@
 import React from 'react'
-import { useState as useCtxState } from '../context'
-import { State } from '../context/reducer'
+import * as api from "../api/auth";
 
 
 export default function useExistUser() {
-    const [{user}]: [State] = useCtxState()
+    
+    const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false)
 
-    return !!user
+       React.useEffect(() => {
+           (async () => {
+                const res = await api.getCookies()
+                setIsAuthenticated(!!res.cookies?.user_session);
+                
+           })()
+       }, [])
+
+        
+    return {
+        isAuthenticated,
+        setIsAuthenticated
+    }
 }

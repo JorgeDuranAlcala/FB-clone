@@ -77,24 +77,22 @@ function PostInput({ ...rest }: Props): ReactElement {
 
         try {
           
-          const post =  await create_post(input, user?.picture.data.url ,currentFiles[0])
+          const post =  await create_post(input, user?.userImg ,currentFiles[0])
           setOpen(false)
-          console.log(post)
           
         } catch (error) {
-          console.log(error.message)
+          throw new Error(error.message)
         }
 
     } else {
 
         try {
           
-          const post =  await create_post(input, user?.picture.data.url)
+          const post =  await create_post(input, user?.userImg)
           setOpen(false)
-          console.log(post)
           
         } catch (error) {
-          console.log(error.message)
+          throw new Error(error.message)
         }
 
     }

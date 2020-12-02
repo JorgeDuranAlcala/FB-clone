@@ -67,8 +67,8 @@ const [input, setInput] = useState<string>('')
     const comment = {
         commentBody: input,
         user: {
-            userImg: user?.picture.data.url,
-            username: user?.name
+            userImg: user?.userImg,
+            username: user?.username
         }
     }
 

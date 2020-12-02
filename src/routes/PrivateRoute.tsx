@@ -8,10 +8,10 @@ interface Props extends RouteProps {
 
 export default function PrivateRoute({ ...props}: Props): ReactElement {
 
-   const userExist = useExistUser()
+   const { isAuthenticated } = useExistUser()
    const history = useHistory()
 
-   if(!userExist) {
+   if(!isAuthenticated) {
        history.push('/login')
    }
 

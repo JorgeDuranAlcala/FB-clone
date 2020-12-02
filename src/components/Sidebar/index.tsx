@@ -3,6 +3,9 @@ import { WithStyles, withStyles } from '@material-ui/core'
 import { ArrowDropDown } from "@material-ui/icons";
 import styles from "./styles";
 import SidebarRow from './Sidebar-row';
+import { State } from '../../context/reducer';
+import { useState as useCtxState } from '../../context';
+import UserAvatar from '../Avatar'
 
 interface Props extends WithStyles<typeof styles> {
     
@@ -11,9 +14,12 @@ interface Props extends WithStyles<typeof styles> {
 export default withStyles(styles)(
     
     function Sidebar({ classes }: Props): ReactElement {
+
+        const [{ user }]: [State] = useCtxState()
+
         return (
             <div className={classes.root}>
-                <SidebarRow className={classes.sidebar__row} title="Name" src="https://avataaars.io/?avatarStyle=Circle&topType=WinterHat2&accessoriesType=Prescription01&hatColor=Blue01&facialHairType=BeardMedium&facialHairColor=Blonde&clotheType=ShirtCrewNeck&clotheColor=Blue01&eyeType=Squint&eyebrowType=DefaultNatural&mouthType=ScreamOpen&skinColor=Yellow" />
+                <UserAvatar name={user?.username} src={user?.userImg} shape="circle" />
                 <SidebarRow className={classes.sidebar__row} title="Friends" src="https://static.xx.fbcdn.net/rsrc.php/v3/y8/r/S0U5ECzYUSu.png"  />
                 <SidebarRow className={classes.sidebar__row} title="Groups" src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png"  />
                 <SidebarRow className={classes.sidebar__row} title="Watch" src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/duk32h44Y31.png"  />

@@ -1,32 +1,19 @@
 import React from 'react'
-import FacebookButton, { ReactFacebookFailureResponse, ReactFacebookLoginInfo } from 'react-facebook-login'
-import { Facebook as fcbIcon  } from "@material-ui/icons";
+/* import { Facebook as fcbIcon  } from "@material-ui/icons"; */
 import useStyles from './styles'
-import { useState as useCtxState } from '../../context';
-import { ActionTypes } from '../../context/reducer';
-import { useHistory } from 'react-router-dom';
-import { IUser } from '../../models/user';
+/* import { useState as useCtxState } from '../../context'; */
 import useFBLogin from "../../hooks/useFacebookLogin";
+import useProfile from '../../hooks/useProfile';
 
 const LogIn = () => {
 
     const classes = useStyles()
-    const [{}, dispatch] = useCtxState()
-    const history = useHistory()
-    const { loginWithFB, error } = useFBLogin(history, dispatch)
+    /* const [{}, dispatch] = useCtxState()
+    const history = useHistory() */
+    const { loginWithFB, error, logOut } = useFBLogin()
+    const { data, error: errProfile, loading, getProfileData  } = useProfile()
 
-    const fbResponse = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
-        
-        //console.log(response)
-        dispatch({
-            type: ActionTypes.SIGN_IN,
-            user: response as IUser
-        })
-
-
-        history.push('/')
-    }
-
+    console.log(data)
 
     return (
         <div className={classes.root} >
@@ -35,7 +22,13 @@ const LogIn = () => {
                 <button onClick={loginWithFB} >
                     Login or signup with Facebook
                 </button>
-                <p> { error && error.message } </p>
+                <button onClick={logOut} >
+                    Log out
+                </button>
+                <button onClick={getProfileData} disabled={loading} >
+                    Get profile Data
+                </button>
+                <p> { error?.message || errProfile?.message } </p>
             </div>
         </div>
     )

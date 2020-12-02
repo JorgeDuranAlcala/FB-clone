@@ -1,4 +1,3 @@
-import { IComment } from "../models/comment"
 import { Ipost } from "../models/post"
 import { IUser } from "../models/user"
 
@@ -39,6 +38,11 @@ export default function ctxReducer(state: State, action: Action) {
                     return {
                         ...state,
                         user: action.user
+                    }
+                case ActionTypes.LOG_OUT:
+                    return {
+                        ...state,
+                        user: null
                     }
                 case ActionTypes.ADD_POSTS:
                     return {

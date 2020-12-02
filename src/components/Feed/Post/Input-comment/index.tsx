@@ -30,7 +30,7 @@ export default function InputComment({
     return (
         <Fragment>
             <Flex className={classes.root}>
-                <Avatar className={classes.avatar} src={user?.picture.data.url} />
+                <Avatar className={classes.avatar} src={user?.userImg} />
                 <Flex align="center"  className={classes.input_container}>
                     <form onSubmit={onSubmit && onSubmit} className={classes.form} >
                         <input placeholder="Write a comment" value={input} onChange={onChange} className={classes.inputFile} type="text"/>

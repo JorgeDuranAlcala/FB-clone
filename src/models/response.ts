@@ -25,4 +25,10 @@ export type ReplyResponse = {
     reply?: IReply
 }
 
-export type Response = BasicResponse & getPostsResponse & updatePostResponse
+export type GetCookieResponse = {
+    cookies?: {
+        user_session?: string
+    }
+}
+
+export type Response = GetCookieResponse | ReplyResponse
