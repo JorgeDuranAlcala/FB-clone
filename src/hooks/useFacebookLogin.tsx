@@ -4,6 +4,7 @@ import { ActionTypes, State } from '../context/reducer';
 import { useState as getCtxState } from '../context';
 import { useHistory } from 'react-router-dom'
 import { IUser } from '../models/user';
+import { ReactFacebookLoginInfo } from 'react-facebook-login';
 
 export default function () {
 
@@ -11,26 +12,28 @@ export default function () {
    const [error, setError] = React.useState<Error | null>(null)
    const history = useHistory()
 
-   React.useEffect(() => {
-       (async () => {
-           try {
-               const data = await api.facebookLogin()
+   const loginWithFB = async (response: ReactFacebookLoginInfo) => {
+       //window.open("http://localhost:3500/api/v1/auth/facebook", "_self")
 
-               dispatch({
-                    type: ActionTypes.SIGN_IN,
-                    user: data.user as IUser
-                }) 
 
-               history.push('/')
+       //console.log(response)
 
-           } catch (error) {
-                setError(error.message)
-           }
-       })()
-   }, [dispatch, history])
+        const user: IUser = {
+            access_token: response.accessToken,
+            username: response.name || '',
+            userImg: response.picture?.data.url || '',
+            facebookId: response.id
+        }
 
-   const loginWithFB = () => {
-       window.open("http://localhost:3500/api/v1/auth/facebook", "_self")
+        const res = await api.Login(user)
+        console.group("Login Response >>")
+        console.log(res)
+        console.groupEnd()
+        
+       dispatch({
+            type: ActionTypes.SIGN_IN,
+            user
+        }) 
    }
 
    const logOut = async () => {

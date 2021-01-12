@@ -9,8 +9,11 @@ import { useState as getCtxState } from "./context/index";
 
 function App() {
   const [{ posts, user }] = getCtxState()
- 
+  console.group("USER >>")
+  console.log(user)
+  console.groupEnd()
   const history = createBrowserHistory()
+
 
   return (
     <div className="App">

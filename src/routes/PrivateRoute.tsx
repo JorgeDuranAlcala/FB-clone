@@ -1,19 +1,14 @@
 import React, { ReactElement } from 'react'
 import { Route, RouteProps, useHistory } from 'react-router-dom'
 import useExistUser from '../hooks/useExistUser'
+import * as api from '../api/auth'
 
-interface Props extends RouteProps {
-    
-}
 
-export default function PrivateRoute({ ...props}: Props): ReactElement {
+export default function PrivateRoute({ ...props}: RouteProps): ReactElement {
 
    const { isAuthenticated } = useExistUser()
    const history = useHistory()
 
-   if(!isAuthenticated) {
-       history.push('/login')
-   }
 
     return <Route {...props} />
 }

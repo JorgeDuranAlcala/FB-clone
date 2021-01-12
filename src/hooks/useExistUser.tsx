@@ -6,13 +6,17 @@ export default function useExistUser() {
     
     const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false)
 
-       React.useEffect(() => {
+     /*   React.useEffect(() => {
            (async () => {
-                const res = await api.getCookies()
-                setIsAuthenticated(!!res.cookies?.user_session);
+                api.getCookies()
+                .then(res => {
+                    console.group("Cookies")
+                    console.log(res)
+                    setIsAuthenticated(!!res.cookies?.user_session);
+                })
                 
            })()
-       }, [])
+       }, []) */
 
         
     return {
