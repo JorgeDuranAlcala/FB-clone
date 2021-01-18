@@ -1,5 +1,6 @@
 import { IComment, IReply } from "./comment";
 import { Ipost } from "./post";
+import { IUser } from "./user";
 
 export type BasicResponse = {
     message: string;
@@ -28,7 +29,8 @@ export type ReplyResponse = {
 export type GetCookieResponse = {
     cookies?: {
         user_session?: string
-    }
+    },
+    user: IUser
 }
 
 export type Response = GetCookieResponse | ReplyResponse

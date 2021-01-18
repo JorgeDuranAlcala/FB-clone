@@ -5,12 +5,14 @@ import { useState as getCtxState } from '../context';
 import { useHistory } from 'react-router-dom'
 import { IUser } from '../models/user';
 import { ReactFacebookLoginInfo } from 'react-facebook-login';
+import useLocalStorage from './useLocalStorage';
 
 export default function () {
 
     const [{}, dispatch]: [State | {}, any] = getCtxState()
    const [error, setError] = React.useState<Error | null>(null)
    const history = useHistory()
+   const { setItem } = useLocalStorage()
 
    const loginWithFB = async (response: ReactFacebookLoginInfo) => {
        //window.open("http://localhost:3500/api/v1/auth/facebook", "_self")
@@ -26,6 +28,7 @@ export default function () {
         }
 
         const res = await api.Login(user)
+        setItem('user', JSON.stringify(res.New_user))
         console.group("Login Response >>")
         console.log(res)
         console.groupEnd()

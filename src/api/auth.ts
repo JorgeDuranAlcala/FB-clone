@@ -50,10 +50,10 @@ export const logOut = async () => {
 export const getCookies = async () => {
     try {
 
-        const res = await fetch(`${ENDPOINT}/getCookies`, fetchOptionsWithCredentials())
+        const res = await fetch(`${ENDPOINT}/getCookies`, fetchOptionsWithCredentials() )
         return await res.json() as GetCookieResponse
 
     } catch (error) {
-        throw new Error(error)
+        console.error(error)
     }
 }
