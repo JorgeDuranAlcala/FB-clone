@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Home from './pages/Home';
 import LoginPage from "./pages/Log-in";
@@ -11,6 +11,7 @@ import { ActionTypes } from './context/reducer';
 import useLocalStorage from './hooks/useLocalStorage';
 import * as API from './api/auth'
 import ProfilePage from './pages/Profile';
+import Header from './components/Header'
 
 function App() {
   const [{ posts, user }, dispatch] = getCtxState()
@@ -47,12 +48,13 @@ function App() {
 
   return (
     <div className="App">
-      <Router history={history}>
+      <Router>
            {/*  <PrivateRoute path="/" exact component={Home} user={user} /> */}
            {
              !user ? <LoginPage/> 
              : (
                 <>
+                  <Header/>
                   <Route path="/" exact component={Home}  />
                   <Route path="/profile" component={ProfilePage} />
                </>
