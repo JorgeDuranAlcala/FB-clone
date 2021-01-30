@@ -6,6 +6,7 @@ import useLocalStorage from '../hooks/useLocalStorage'
 import { useState as useCTXState } from '../context'
 import { auth_validator } from "../utils/auth_validation";
 import { IUser } from '../models/user'
+import { State } from '../context/reducer'
 
 
 /* export default function PrivateRoute({ ...props}: RouteProps): ReactElement {
@@ -29,34 +30,19 @@ import { IUser } from '../models/user'
 interface PrivateRouteProps extends RouteProps {
    /*  isAuthenticated: boolean; */
    /* component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>; */
-   user: IUser
+   //user: IUser
 }
 
 const PrivateRoute = ({
     /* component: Component, */
-    user,
     ...rest
 }: PrivateRouteProps) => {
-    
-    const history = useHistory()
-    /*     const [condition, setCondition] = React.useState(false)
-    
-    React.useEffect(() => {
-        
-        const fetchCondition = async () => setCondition( await auth_validator() )
-        
-        fetchCondition()
 
-        console.log("hello")
-        
-    }, []) */
-    console.log("private >> ", user)
+    const [{ user }]: [State] = useCTXState()
 
 
     return  user ? <Route {...rest}  /> : <Redirect to="/login" />
 
 
 }
-export default React.memo( PrivateRoute, (prevProps, nextProps) => (
-    prevProps.user === nextProps.user || prevProps.component === nextProps.component
-))
+export default React.memo(PrivateRoute)
